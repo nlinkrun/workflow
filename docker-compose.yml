@@ -1,0 +1,70 @@
+# THIS FILE IS INTENDED FOR END-USERS / CUSTOMERS
+# Simply copy this file and run the command: docker-compose up -d
+
+name: nlink-workspace
+
+services:
+  nlink:
+    container_name: nlink-workflow
+    # Pull the pre-built monolithic image from Docker Hub (No Source Code Required)
+    image: nlinkio/nlink-workflow:v1.0.0
+    ports:
+      - "80:80"  # Map public ports according to your network needs (e.g., "8080:80")
+    restart: always
+    volumes:
+      # Map the directory containing the SQLite database and system assets
+      - ./nlink_data:/app/storage
+    environment:
+      # ALL SETTINGS HERE WILL OVERRIDE THE INTERNAL CONTAINER CONFIGURATIONS
+      # -------------------------------------------------------------
+      # 0. CORE & SECURITY (CRITICAL):
+      # Define the public URL where customers access nLink (Required for SAML SSO to work correctly)
+      - BASE_FRONTEND_URL=http://localhost
+      - BASE_API_URL=http://localhost/api
+      # Change these secret keys to randomly generated strings for production!
+      # - JWT_SECRET_KEY=change_this_to_a_long_random_string
+      # - CREDENTIAL_SECRET_KEY=change_this_to_another_32_char_random_string
+      # - INTERNAL_API_TOKEN=change_this_too_if_using_microservices
+      
+      # 1. DATABASE: Explicitly defining SQLite as the default database.
+      - DATABASE_DEFAULT=SQLITE
+      - SQLITE_DATABASE=/app/storage/database.sqlite
+      
+      # Unless you wish to scale using an external MySQL database, then comment SQLite above and uncomment these lines:
+      # - DATABASE_DEFAULT=MYSQL
+      # - MYSQL_HOST=192.168.1.100  # Or the mysql service name below if deployed within the same cluster
+      # - MYSQL_PORT=3306
+      # - MYSQL_DATABASE=nlink_db
+      # - MYSQL_USERNAME=root
+      # - MYSQL_PASSWORD=root_secret
+      
+      # 2. REDIS: (Optional) Enable Redis Caching instead of default internal memory processing
+      - REDIS_ADDR=redis_server:6379 
+      - REDIS_PASSWORD=123456
+      - REDIS_DB=8
+
+      # 3. AI SELF-HEALING: (Optional) Supply an OpenAI Key to auto-repair data mapping errors
+      # - NLINK_HEALING_OPENAI_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxx
+
+  # =================================================================================
+  # Optional: For customers who want to run MySQL/Redis within the same Docker network
+  # =================================================================================
+  # mysql_db:
+  #   image: mysql:8.0
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root_secret
+  #     MYSQL_DATABASE: nlink_db
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+
+  redis_server:
+    image: redis:alpine
+    restart: always
+    command: redis-server --requirepass 123456
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+#   mysql_data:
