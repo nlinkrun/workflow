@@ -7,7 +7,7 @@ services:
   nlink:
     container_name: nlink-workflow
     # Pull the pre-built monolithic image from Docker Hub (No Source Code Required)
-    image: nlinkio/nlink-workflow:v1.0.0
+    image: nlinkio/nlink-workflow:v1.0.1
     ports:
       - "80:80"  # Map public ports according to your network needs (e.g., "8080:80")
     restart: always
