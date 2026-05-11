@@ -2,6 +2,8 @@
 
 # nLink Workflow System Architecture & Overview Documentation
 
+🌐 **Website:** [https://nlink.run](https://nlink.run) | 📚 **Documentation:** [https://nlink.run/docs](https://nlink.run/docs)
+
 **Table of Contents**
 {{toc}}
 
@@ -52,7 +54,7 @@
 
 ## 4. Deployment & Databases
 
-The system is designed for easy Self-Hosting using Docker (available via Docker Hub `nlinkio/nlink-workflow`).
+The system is designed for easy Self-Hosting using Docker (available via Docker Hub [`nlinkio/nlink-workflow`](https://hub.docker.com/r/nlinkio/nlink-workflow)).
 
 * **Supported Databases:**
   * MySQL
