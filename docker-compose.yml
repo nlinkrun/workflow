@@ -69,6 +69,12 @@ services:
     volumes:
       - redis_data:/data
 
+# browserless:
+  #   image: ghcr.io/browserless/chromium:latest
+  #   restart: always
+  #   environment:
+  #     - CONCURRENT=10
+  
 volumes:
   redis_data:
 #   mysql_data:
