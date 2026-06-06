@@ -46,6 +46,10 @@ services:
       # 3. AI SELF-HEALING: (Optional) Supply an OpenAI Key to auto-repair data mapping errors
       # - NLINK_HEALING_OPENAI_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxx
 
+      # 4. WEB CRAWLER: (Optional) Define Browserless API URL for JavaScript Rendering in Crawler Node
+      # Uncomment to use the internal browserless service defined below
+      # - BROWSERLESS_API_URL=http://browserless:3000/content
+
   # =================================================================================
   # Optional: For customers who want to run MySQL/Redis within the same Docker network
   # =================================================================================
