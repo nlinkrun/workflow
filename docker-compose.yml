@@ -69,7 +69,7 @@ services:
     volumes:
       - redis_data:/data
 
-# browserless:
+  # browserless:
   #   image: ghcr.io/browserless/chromium:latest
   #   restart: always
   #   environment:
